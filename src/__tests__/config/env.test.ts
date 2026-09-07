@@ -10,6 +10,9 @@ describe("configuração do ambiente", () => {
       DYNAMODB_SECRET_ACCESS_KEY: "test-secret",
       USERS_TABLE_NAME: "test-users",
       PRODUCTS_TABLE_NAME: "test-products",
+      JWT_SECRET: "test-jwt-secret",
+      JWT_ACCESS_TOKEN_EXPIRES_IN: "10m",
+      JWT_REFRESH_TOKEN_EXPIRES_IN: "2d",
     });
 
     expect(result).toEqual({
@@ -24,6 +27,11 @@ describe("configuração do ambiente", () => {
         users: "test-users",
         products: "test-products",
       },
+      auth: {
+        jwtSecret: "test-jwt-secret",
+        accessTokenExpiresIn: "10m",
+        refreshTokenExpiresIn: "2d",
+      },
     });
   });
 
@@ -31,5 +39,9 @@ describe("configuração do ambiente", () => {
     expect(() => loadEnv({ PORT: "aaa" })).toThrow(
       "PORT deve ser um número inteiro entre 1 e 65535",
     );
+  });
+
+  it("exige JWT_SECRET", () => {
+    expect(() => loadEnv({})).toThrow("JWT_SECRET é obrigatória");
   });
 });

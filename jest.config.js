@@ -12,4 +12,5 @@ export default {
   transform: {
     ...tsJestTransformCfg,
   },
+  setupFiles: ["<rootDir>/jest.setup.js"],
 };

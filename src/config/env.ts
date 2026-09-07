@@ -1,3 +1,13 @@
+function requiredEnv(source: NodeJS.ProcessEnv, name: string): string {
+  const value = source[name];
+
+  if (value === undefined || value.trim() === "") {
+    throw new Error(`${name} é obrigatória`);
+  }
+
+  return value;
+}
+
 export function loadEnv(source: NodeJS.ProcessEnv = process.env) {
   const port = Number(source.PORT ?? "3000");
 
@@ -18,6 +28,12 @@ export function loadEnv(source: NodeJS.ProcessEnv = process.env) {
     tables: {
       users: source.USERS_TABLE_NAME ?? "users",
       products: source.PRODUCTS_TABLE_NAME ?? "products",
+    },
+
+    auth: {
+      jwtSecret: requiredEnv(source, "JWT_SECRET"),
+      accessTokenExpiresIn: source.JWT_ACCESS_TOKEN_EXPIRES_IN ?? "15m",
+      refreshTokenExpiresIn: source.JWT_REFRESH_TOKEN_EXPIRES_IN ?? "7d",
     },
   } as const;
 }
