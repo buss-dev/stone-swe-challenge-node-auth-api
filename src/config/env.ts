@@ -8,6 +8,26 @@ function requiredEnv(source: NodeJS.ProcessEnv, name: string): string {
   return value;
 }
 
+function positiveIntegerEnv(
+  source: NodeJS.ProcessEnv,
+  name: string,
+  defaultValue: number,
+): number {
+  const rawValue = source[name] ?? String(defaultValue);
+  const value = rawValue.trim();
+  const parsedValue = Number(value);
+
+  if (
+    !/^\d+$/.test(value) ||
+    !Number.isSafeInteger(parsedValue) ||
+    parsedValue <= 0
+  ) {
+    throw new Error(`${name} deve ser um inteiro positivo`);
+  }
+
+  return parsedValue;
+}
+
 export function loadEnv(source: NodeJS.ProcessEnv = process.env) {
   const port = Number(source.PORT ?? "3000");
 
@@ -32,8 +52,16 @@ export function loadEnv(source: NodeJS.ProcessEnv = process.env) {
 
     auth: {
       jwtSecret: requiredEnv(source, "JWT_SECRET"),
-      accessTokenExpiresIn: source.JWT_ACCESS_TOKEN_EXPIRES_IN ?? "15m",
-      refreshTokenExpiresIn: source.JWT_REFRESH_TOKEN_EXPIRES_IN ?? "7d",
+      accessTokenExpiresInSeconds: positiveIntegerEnv(
+        source,
+        "JWT_ACCESS_TOKEN_EXPIRES_IN_SECONDS",
+        900,
+      ),
+      refreshTokenExpiresInSeconds: positiveIntegerEnv(
+        source,
+        "JWT_REFRESH_TOKEN_EXPIRES_IN_SECONDS",
+        604800,
+      ),
     },
   } as const;
 }

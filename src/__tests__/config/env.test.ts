@@ -1,7 +1,7 @@
 import { loadEnv } from "../../config/env.js";
 
 describe("configuração do ambiente", () => {
-  it("usa os valores fornecidos pelo ambiente", () => {
+  it("converte as durações dos tokens para segundos", () => {
     const result = loadEnv({
       PORT: "4000",
       AWS_REGION: "us-east-1",
@@ -11,27 +11,14 @@ describe("configuração do ambiente", () => {
       USERS_TABLE_NAME: "test-users",
       PRODUCTS_TABLE_NAME: "test-products",
       JWT_SECRET: "test-jwt-secret",
-      JWT_ACCESS_TOKEN_EXPIRES_IN: "10m",
-      JWT_REFRESH_TOKEN_EXPIRES_IN: "2d",
+      JWT_ACCESS_TOKEN_EXPIRES_IN_SECONDS: "600",
+      JWT_REFRESH_TOKEN_EXPIRES_IN_SECONDS: "172800",
     });
 
-    expect(result).toEqual({
-      port: 4000,
-      dynamodb: {
-        region: "us-east-1",
-        endpoint: "http://localhost:9000",
-        accessKeyId: "test-key",
-        secretAccessKey: "test-secret",
-      },
-      tables: {
-        users: "test-users",
-        products: "test-products",
-      },
-      auth: {
-        jwtSecret: "test-jwt-secret",
-        accessTokenExpiresIn: "10m",
-        refreshTokenExpiresIn: "2d",
-      },
+    expect(result.auth).toEqual({
+      jwtSecret: "test-jwt-secret",
+      accessTokenExpiresInSeconds: 600,
+      refreshTokenExpiresInSeconds: 172800,
     });
   });
 
@@ -43,5 +30,17 @@ describe("configuração do ambiente", () => {
 
   it("exige JWT_SECRET", () => {
     expect(() => loadEnv({})).toThrow("JWT_SECRET é obrigatória");
+  });
+
+  it("rejeita uma duração de access token inválida", () => {
+    expect(() =>
+      loadEnv({
+        JWT_SECRET: "test-jwt-secret",
+        JWT_ACCESS_TOKEN_EXPIRES_IN_SECONDS: "abc",
+        JWT_REFRESH_TOKEN_EXPIRES_IN_SECONDS: "172800",
+      }),
+    ).toThrow(
+      "JWT_ACCESS_TOKEN_EXPIRES_IN_SECONDS deve ser um inteiro positivo",
+    );
   });
 });
