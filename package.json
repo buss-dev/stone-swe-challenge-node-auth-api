@@ -2,15 +2,16 @@
   "name": "stone-swe-challenge-node-auth-api",
   "version": "1.0.0",
   "type": "module",
-  "description": "- Desafio técnico para vaga de Senior Software da Engineer na Stone",
+  "description": "- Desafio técnico para vaga de Senior Software Engineer na Stone",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx watch src/server.ts",
+    "dev": "tsx watch --env-file=.env src/server.ts",
     "build": "tsc -p tsconfig.build.json",
-    "start": "node dist/server.js",
+    "start": "node --env-file=.env dist/server.js",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "test:watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watch",
-    "test:coverage": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage"
+    "test:coverage": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage",
+    "db:create-tables": "tsx --env-file=.env src/scripts/create-tables.ts"
   },
   "repository": {
     "type": "git",
