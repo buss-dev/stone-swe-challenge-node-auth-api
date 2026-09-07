@@ -96,6 +96,40 @@ async function main(): Promise<void> {
       },
     ],
   });
+
+  await createTable({
+    TableName: env.tables.revokedTokens,
+    BillingMode: "PAY_PER_REQUEST",
+    AttributeDefinitions: [
+      {
+        AttributeName: "jti",
+        AttributeType: "S",
+      },
+    ],
+    KeySchema: [
+      {
+        AttributeName: "jti",
+        KeyType: "HASH",
+      },
+    ],
+  });
+
+  await createTable({
+    TableName: env.tables.refreshTokens,
+    BillingMode: "PAY_PER_REQUEST",
+    AttributeDefinitions: [
+      {
+        AttributeName: "tokenHash",
+        AttributeType: "S",
+      },
+    ],
+    KeySchema: [
+      {
+        AttributeName: "tokenHash",
+        KeyType: "HASH",
+      },
+    ],
+  });
 }
 
 main().catch((error: unknown) => {
