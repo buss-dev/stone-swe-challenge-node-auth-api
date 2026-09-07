@@ -24,6 +24,8 @@
   },
   "homepage": "https://github.com/buss-dev/stone-swe-challenge-node-auth-api#readme",
   "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.1127.0",
+    "@aws-sdk/lib-dynamodb": "^3.1127.0",
     "express": "^5.2.1"
   },
   "devDependencies": {
