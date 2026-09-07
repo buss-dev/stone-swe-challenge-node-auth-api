@@ -43,4 +43,19 @@ describe("configuração do ambiente", () => {
       "JWT_ACCESS_TOKEN_EXPIRES_IN_SECONDS deve ser um inteiro positivo",
     );
   });
+
+  it("usa os nomes das tabelas de autenticação fornecidos pelo ambiente", () => {
+    const result = loadEnv({
+      JWT_SECRET: "test-jwt-secret",
+      REVOKED_TOKENS_TABLE_NAME: "test-revoked-tokens",
+      REFRESH_TOKENS_TABLE_NAME: "test-refresh-tokens",
+    });
+
+    expect(result.tables).toEqual({
+      users: "users",
+      products: "products",
+      revokedTokens: "test-revoked-tokens",
+      refreshTokens: "test-refresh-tokens",
+    });
+  });
 });

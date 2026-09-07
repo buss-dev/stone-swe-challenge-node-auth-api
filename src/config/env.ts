@@ -48,6 +48,8 @@ export function loadEnv(source: NodeJS.ProcessEnv = process.env) {
     tables: {
       users: source.USERS_TABLE_NAME ?? "users",
       products: source.PRODUCTS_TABLE_NAME ?? "products",
+      revokedTokens: source.REVOKED_TOKENS_TABLE_NAME ?? "revoked_tokens",
+      refreshTokens: source.REFRESH_TOKENS_TABLE_NAME ?? "refresh_tokens",
     },
 
     auth: {
