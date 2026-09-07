@@ -1,7 +1,7 @@
 # Architecture Decision Records
 
 Este diretório contém os registros de decisões arquiteturais (ADRs) deste projeto.
-Cada ADR documenta uma decisão significativa, seu contexto e as alternativas consideradas.
+Cada ADR documenta uma decisão significativa, seu contexto e suas consequências.
 
 ## Índice
 
@@ -9,3 +9,4 @@ Cada ADR documenta uma decisão significativa, seu contexto e as alternativas co
 | ---- | ---------------------------------------- | ------ |
 | 0001 | Registrar decisões arquiteturais via ADR | Aceito |
 | 0002 | Usar DynamoDB como banco de dados        | Aceito |
+| 0003 | Definir estratégia de autenticação       | Aceito |
