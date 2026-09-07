@@ -4,9 +4,11 @@ Dependências do projeto, agrupadas pela etapa em que foram introduzidas. Ver `d
 
 ## Runtime
 
-| Dependência                      | Docs                                          | Por quê                                                      |
-| -------------------------------- | --------------------------------------------- | ------------------------------------------------------------ |
-| [express](https://expressjs.com) | [link](https://www.npmjs.com/package/express) | Framework HTTP minimalista, sem estrutura de projeto imposta |
+| Dependência                                                                        | Docs                                                                                             | Por quê                                                      |
+| ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------ |
+| [express](https://expressjs.com)                                                   | [link](https://www.npmjs.com/package/express)                                                    | Framework HTTP minimalista, sem estrutura de projeto imposta |
+| [@aws-sdk/client-dynamodb](https://www.npmjs.com/package/@aws-sdk/client-dynamodb) | [link](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/Package/-aws-sdk-client-dynamodb/) | Cliente oficial do DynamoDB para o AWS SDK v3                |
+| [@aws-sdk/lib-dynamodb](https://www.npmjs.com/package/@aws-sdk/lib-dynamodb)       | [link](https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/Package/-aws-sdk-lib-dynamodb/)    | Document Client para trabalhar com tipos JavaScript nativos  |
 
 ## Desenvolvimento
 
