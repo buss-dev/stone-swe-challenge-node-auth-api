@@ -8,3 +8,4 @@ Cada ADR documenta uma decisão significativa, seu contexto e as alternativas co
 | #    | Título                                   | Status |
 | ---- | ---------------------------------------- | ------ |
 | 0001 | Registrar decisões arquiteturais via ADR | Aceito |
+| 0002 | Usar DynamoDB como banco de dados        | Aceito |
