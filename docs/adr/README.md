@@ -5,8 +5,9 @@ Cada ADR documenta uma decisão significativa, seu contexto e suas consequência
 
 ## Índice
 
-| #    | Título                                   | Status |
-| ---- | ---------------------------------------- | ------ |
-| 0001 | Registrar decisões arquiteturais via ADR | Aceito |
-| 0002 | Usar DynamoDB como banco de dados        | Aceito |
-| 0003 | Definir estratégia de autenticação       | Aceito |
+| #    | Título                                       | Status |
+| ---- | -------------------------------------------- | ------ |
+| 0001 | Registrar decisões arquiteturais via ADR     | Aceito |
+| 0002 | Usar DynamoDB como banco de dados            | Aceito |
+| 0003 | Definir estratégia de autenticação           | Aceito |
+| 0004 | Definir contrato HTTP e documentação OpenAPI | Aceito |
