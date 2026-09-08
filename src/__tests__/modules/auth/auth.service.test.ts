@@ -13,6 +13,63 @@ describe("AuthService", () => {
     jest.restoreAllMocks();
   });
 
+  it("cria usuário com e-mail normalizado e senha em hash", async () => {
+    jest.spyOn(usersRepository, "findByEmail").mockResolvedValueOnce(null);
+
+    jest
+      .spyOn(passwordService, "hash")
+      .mockResolvedValueOnce("hashed-password");
+
+    const create = jest
+      .spyOn(usersRepository, "create")
+      .mockResolvedValueOnce();
+
+    const result = await authService.register({
+      email: " User@Example.COM ",
+      password: "StrongPass1!",
+    });
+
+    expect(result).toEqual({
+      userId: expect.any(String),
+      email: "user@example.com",
+    });
+
+    expect(create).toHaveBeenCalledWith({
+      userId: expect.any(String),
+      email: "user@example.com",
+      passwordHash: "hashed-password",
+    });
+  });
+
+  it("rejeita e-mail já cadastrado", async () => {
+    jest.spyOn(usersRepository, "findByEmail").mockResolvedValueOnce({
+      userId: "user-1",
+      email: "user@example.com",
+    });
+
+    await expect(
+      authService.register({
+        email: "user@example.com",
+        password: "StrongPass1!",
+      }),
+    ).rejects.toThrow("E-mail já cadastrado");
+  });
+
+  it.each([
+    "short1!",
+    "strongpass1!",
+    "STRONGPASS1!",
+    "StrongPass!",
+    "StrongPass1",
+  ])("rejeita senha fraca: %s", async (password) => {
+    await expect(
+      authService.register({
+        email: "user@example.com",
+        password,
+      }),
+    ).rejects.toThrow("Senha deve ter no mínimo 8 caracteres");
+  });
+
   it("autentica o usuário e persiste o refresh token", async () => {
     jest.spyOn(usersRepository, "findByEmail").mockResolvedValueOnce({
       userId: "user-1",

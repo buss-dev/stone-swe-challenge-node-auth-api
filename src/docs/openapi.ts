@@ -92,6 +92,54 @@ export const openapiDocument = {
         },
       },
     },
+    "/auth/register": {
+      post: {
+        tags: ["Auth"],
+        summary: "Cria um usuário",
+        requestBody: {
+          required: true,
+          content: {
+            "application/json": {
+              schema: {
+                $ref: "#/components/schemas/RegisterRequest",
+              },
+            },
+          },
+        },
+        responses: {
+          "201": {
+            description: "Usuário criado",
+            content: {
+              "application/json": {
+                schema: {
+                  $ref: "#/components/schemas/RegisterResponse",
+                },
+              },
+            },
+          },
+          "400": {
+            description: "Dados inválidos",
+            content: {
+              "application/json": {
+                schema: {
+                  $ref: "#/components/schemas/ErrorResponse",
+                },
+              },
+            },
+          },
+          "409": {
+            description: "E-mail já cadastrado",
+            content: {
+              "application/json": {
+                schema: {
+                  $ref: "#/components/schemas/ErrorResponse",
+                },
+              },
+            },
+          },
+        },
+      },
+    },
     "/auth/refresh": {
       post: {
         tags: ["Auth"],
@@ -255,6 +303,36 @@ export const openapiDocument = {
             type: "string",
             format: "password",
             example: "password",
+          },
+        },
+      },
+      RegisterRequest: {
+        type: "object",
+        required: ["email", "password"],
+        properties: {
+          email: {
+            type: "string",
+            format: "email",
+            example: "user@example.com",
+          },
+          password: {
+            type: "string",
+            format: "password",
+            minLength: 8,
+            example: "StrongPass1!",
+          },
+        },
+      },
+      RegisterResponse: {
+        type: "object",
+        required: ["userId", "email"],
+        properties: {
+          userId: {
+            type: "string",
+          },
+          email: {
+            type: "string",
+            format: "email",
           },
         },
       },

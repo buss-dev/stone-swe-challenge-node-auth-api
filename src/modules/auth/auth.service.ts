@@ -1,3 +1,5 @@
+import { randomUUID } from "node:crypto";
+
 import { usersRepository } from "../users/users.repository.js";
 import { passwordService } from "./password.service.js";
 import { refreshTokenRepository } from "./refresh-token.repository.js";
@@ -8,6 +10,16 @@ import { type AccessTokenPayload, tokenService } from "./token.service.js";
 export interface LoginInput {
   email: string;
   password: string;
+}
+
+export interface RegisterInput {
+  email: string;
+  password: string;
+}
+
+export interface RegisterResult {
+  userId: string;
+  email: string;
 }
 
 export interface LoginResult {
@@ -27,6 +39,47 @@ export interface RefreshResult {
 }
 
 export class AuthService {
+  async register(input: RegisterInput): Promise<RegisterResult> {
+    const email = input.email.trim().toLowerCase();
+
+    if (email === "") {
+      throw new Error("E-mail é obrigatório");
+    }
+
+    const strongPassword =
+      input.password.length >= 8 &&
+      /[A-Z]/.test(input.password) &&
+      /[a-z]/.test(input.password) &&
+      /\d/.test(input.password) &&
+      /[^A-Za-z0-9]/.test(input.password);
+
+    if (!strongPassword) {
+      throw new Error(
+        "Senha deve ter no mínimo 8 caracteres, incluindo letra maiúscula, letra minúscula, número e caractere especial",
+      );
+    }
+
+    const existingUser = await usersRepository.findByEmail(email);
+
+    if (existingUser !== null) {
+      throw new Error("E-mail já cadastrado");
+    }
+
+    const userId = randomUUID();
+    const passwordHash = await passwordService.hash(input.password);
+
+    await usersRepository.create({
+      userId,
+      email,
+      passwordHash,
+    });
+
+    return {
+      userId,
+      email,
+    };
+  }
+
   async login(input: LoginInput): Promise<LoginResult> {
     const user = await usersRepository.findByEmail(input.email);
     const passwordHash = user?.passwordHash;

@@ -28,6 +28,28 @@ function getBearerToken(request: Request): string {
 }
 
 export class AuthController {
+  register = async (
+    request: Request,
+    response: Response,
+    next: NextFunction,
+  ): Promise<void> => {
+    try {
+      const body = request.body as Record<string, unknown>;
+
+      const email = requiredString(body.email, "email");
+      const password = requiredString(body.password, "password");
+
+      const result = await authService.register({
+        email,
+        password,
+      });
+
+      response.status(201).json(result);
+    } catch (error: unknown) {
+      next(error);
+    }
+  };
+
   login = async (
     request: Request,
     response: Response,

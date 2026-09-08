@@ -18,6 +18,28 @@ export const errorHandler: ErrorRequestHandler = (
 
   if (
     error instanceof Error &&
+    error.message === "E-mail já cadastrado"
+  ) {
+    response.status(409).json({
+      message: error.message,
+    });
+
+    return;
+  }
+
+  if (
+    error instanceof Error &&
+    error.message.startsWith("Senha deve ter")
+  ) {
+    response.status(400).json({
+      message: error.message,
+    });
+
+    return;
+  }
+
+  if (
+    error instanceof Error &&
     [
       "Credenciais inválidas",
       "Refresh token inválido",

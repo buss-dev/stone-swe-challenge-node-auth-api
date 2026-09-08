@@ -1,4 +1,4 @@
-import { QueryCommand } from "@aws-sdk/lib-dynamodb";
+import { PutCommand, QueryCommand } from "@aws-sdk/lib-dynamodb";
 
 import { env } from "../../config/env.js";
 import { dynamoDbDocumentClient } from "../../infra/dynamodb/client.js";
@@ -10,6 +10,15 @@ export interface UserRecord {
 }
 
 export class UsersRepository {
+  async create(user: UserRecord): Promise<void> {
+    await dynamoDbDocumentClient.send(
+      new PutCommand({
+        TableName: env.tables.users,
+        Item: user,
+      }),
+    );
+  }
+
   async findByEmail(email: string): Promise<UserRecord | null> {
     const response = await dynamoDbDocumentClient.send(
       new QueryCommand({

@@ -91,4 +91,65 @@ describe("Rotas de autenticação", () => {
       message: "Authorization Bearer token é obrigatório",
     });
   });
+
+  it("cria um usuário", async () => {
+    jest.spyOn(authService, "register").mockResolvedValueOnce({
+      userId: "user-001",
+      email: "newuser@example.com",
+    });
+
+    const response = await request(app)
+      .post("/auth/register")
+      .send({
+        email: " NewUser@Example.com ",
+        password: "StrongPass1!",
+      });
+
+    expect(response.status).toBe(201);
+    expect(response.body).toEqual({
+      userId: "user-001",
+      email: "newuser@example.com",
+    });
+  });
+
+  it("retorna conflito quando o e-mail já está cadastrado", async () => {
+    jest
+      .spyOn(authService, "register")
+      .mockRejectedValueOnce(new Error("E-mail já cadastrado"));
+
+    const response = await request(app)
+      .post("/auth/register")
+      .send({
+        email: "user@example.com",
+        password: "StrongPass1!",
+      });
+
+    expect(response.status).toBe(409);
+    expect(response.body).toEqual({
+      message: "E-mail já cadastrado",
+    });
+  });
+
+  it("retorna erro para senha fraca", async () => {
+    jest
+      .spyOn(authService, "register")
+      .mockRejectedValueOnce(
+        new Error(
+          "Senha deve ter no mínimo 8 caracteres, incluindo letra maiúscula, letra minúscula, número e caractere especial",
+        ),
+      );
+
+    const response = await request(app)
+      .post("/auth/register")
+      .send({
+        email: "user@example.com",
+        password: "weak",
+      });
+
+    expect(response.status).toBe(400);
+    expect(response.body).toEqual({
+      message:
+        "Senha deve ter no mínimo 8 caracteres, incluindo letra maiúscula, letra minúscula, número e caractere especial",
+    });
+  });
 });

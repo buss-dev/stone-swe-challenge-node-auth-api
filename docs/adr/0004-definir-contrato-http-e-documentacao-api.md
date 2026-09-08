@@ -22,6 +22,7 @@ A API utilizará os seguintes endpoints:
 | Método | Rota            | Autenticação |
 | ------ | --------------- | ------------ |
 | GET    | `/health`       | Não          |
+| POST   | `/auth/register` | Não          |
 | POST   | `/auth/login`   | Não          |
 | POST   | `/auth/refresh` | Não          |
 | POST   | `/auth/logout`  | Access token |
@@ -29,6 +30,36 @@ A API utilizará os seguintes endpoints:
 | GET    | `/docs`         | Não          |
 
 ### Autenticação
+
+`POST /auth/register` receberá:
+
+```json
+{
+  "email": "user@example.com",
+  "password": "StrongPass1!"
+}
+```
+
+O e-mail será normalizado com remoção de espaços nas extremidades e conversão
+para letras minúsculas.
+
+A senha deverá possuir no mínimo 8 caracteres, incluindo letra maiúscula,
+letra minúscula, número e caractere especial.
+
+A resposta de sucesso será `201 Created` e conterá somente os dados públicos:
+
+```json
+{
+  "userId": "user-001",
+  "email": "user@example.com"
+}
+```
+
+O cadastro não emitirá tokens. O usuário deverá realizar login separadamente.
+Essa separação permite adicionar futuramente confirmação de e-mail, ativação
+ou aprovação da conta antes da autenticação.
+
+Caso o e-mail já esteja cadastrado, a API retornará `409 Conflict`.
 
 `POST /auth/login` receberá:
 
