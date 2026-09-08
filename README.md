@@ -8,9 +8,6 @@ revogação de tokens e listagem paginada de produtos usando DynamoDB.
 
 ![Documentação Swagger](docs/media/Swagger.png)
 
-> O print acima representa a documentação Swagger durante o desenvolvimento.
-> A documentação atual também inclui o endpoint `POST /auth/register`.
-
 ## Pré-requisitos
 
 Para executar o projeto pelo fluxo recomendado, instale:
