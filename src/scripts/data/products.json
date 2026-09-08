@@ -1,0 +1,122 @@
+[
+  {
+    "productId": "product-001",
+    "name": "Teclado mecânico",
+    "price": 299.9,
+    "listKey": "PRODUCT"
+  },
+  {
+    "productId": "product-002",
+    "name": "Mouse sem fio",
+    "price": 149.9,
+    "listKey": "PRODUCT"
+  },
+  {
+    "productId": "product-003",
+    "name": "Monitor 24 polegadas",
+    "price": 899.9,
+    "listKey": "PRODUCT"
+  },
+  {
+    "productId": "product-004",
+    "name": "Webcam Full HD",
+    "price": 249.9,
+    "listKey": "PRODUCT"
+  },
+  {
+    "productId": "product-005",
+    "name": "Headset gamer",
+    "price": 199.9,
+    "listKey": "PRODUCT"
+  },
+  {
+    "productId": "product-006",
+    "name": "Suporte para notebook",
+    "price": 119.9,
+    "listKey": "PRODUCT"
+  },
+  {
+    "productId": "product-007",
+    "name": "Hub USB-C",
+    "price": 89.9,
+    "listKey": "PRODUCT"
+  },
+  {
+    "productId": "product-008",
+    "name": "Cadeira de escritório",
+    "price": 1299.9,
+    "listKey": "PRODUCT"
+  },
+  {
+    "productId": "product-009",
+    "name": "Microfone USB",
+    "price": 349.9,
+    "listKey": "PRODUCT"
+  },
+  {
+    "productId": "product-010",
+    "name": "Mousepad grande",
+    "price": 79.9,
+    "listKey": "PRODUCT"
+  },
+  {
+    "productId": "product-011",
+    "name": "SSD externo 1TB",
+    "price": 599.9,
+    "listKey": "PRODUCT"
+  },
+  {
+    "productId": "product-012",
+    "name": "Cabo HDMI",
+    "price": 49.9,
+    "listKey": "PRODUCT"
+  },
+  {
+    "productId": "product-013",
+    "name": "Adaptador Bluetooth",
+    "price": 59.9,
+    "listKey": "PRODUCT"
+  },
+  {
+    "productId": "product-014",
+    "name": "Notebook stand premium",
+    "price": 179.9,
+    "listKey": "PRODUCT"
+  },
+  {
+    "productId": "product-015",
+    "name": "Luminária de mesa",
+    "price": 139.9,
+    "listKey": "PRODUCT"
+  },
+  {
+    "productId": "product-016",
+    "name": "Caixa de som Bluetooth",
+    "price": 229.9,
+    "listKey": "PRODUCT"
+  },
+  {
+    "productId": "product-017",
+    "name": "Teclado numérico",
+    "price": 99.9,
+    "listKey": "PRODUCT"
+  },
+  {
+    "productId": "product-018",
+    "name": "Pen drive 128GB",
+    "price": 69.9,
+    "listKey": "PRODUCT"
+  },
+  {
+    "productId": "product-019",
+    "name": "Carregador USB-C",
+    "price": 159.9,
+    "listKey": "PRODUCT"
+  },
+  {
+    "productId": "product-020",
+    "name": "Cabo USB-C",
+    "price": 39.9,
+    "listKey": "PRODUCT"
+  }
+]
