@@ -2,21 +2,34 @@ import express from "express";
 import swaggerUi from "swagger-ui-express";
 
 import { errorHandler } from "./middlewares/error-handler.js";
+import { env } from "./config/env.js";
 import { openapiDocument } from "./docs/openapi.js";
 import { authRouter } from "./modules/auth/auth.routes.js";
 import { productsRouter } from "./modules/products/products.routes.js";
 
-export const app = express();
+type AppOptions = {
+  trustProxyHops?: number;
+};
 
-app.use(express.json());
+export function createApp({ trustProxyHops = env.trustProxyHops }: AppOptions = {}) {
+  const app = express();
 
-app.use("/docs", swaggerUi.serve, swaggerUi.setup(openapiDocument));
+  app.set("trust proxy", trustProxyHops);
 
-app.get("/health", (_request, response) => {
-  response.json({ status: "ok" });
-});
+  app.use(express.json());
 
-app.use("/auth", authRouter);
-app.use("/products", productsRouter);
+  app.use("/docs", swaggerUi.serve, swaggerUi.setup(openapiDocument));
 
-app.use(errorHandler);
+  app.get("/health", (_request, response) => {
+    response.json({ status: "ok" });
+  });
+
+  app.use("/auth", authRouter);
+  app.use("/products", productsRouter);
+
+  app.use(errorHandler);
+
+  return app;
+}
+
+export const app = createApp();

@@ -58,4 +58,47 @@ describe("configuração do ambiente", () => {
       refreshTokens: "test-refresh-tokens",
     });
   });
+
+  it("configures request limits from defaults and environment", () => {
+    const defaults = loadEnv({ JWT_SECRET: "test-jwt-secret" });
+    const configured = loadEnv({
+      JWT_SECRET: "test-jwt-secret",
+      RATE_LIMIT_MAX_REQUESTS: "12",
+      RATE_LIMIT_WINDOW_SECONDS: "45",
+    });
+
+    expect(defaults.rateLimit).toEqual({
+      maxRequests: 100,
+      windowSeconds: 60,
+    });
+    expect(configured.rateLimit).toEqual({
+      maxRequests: 12,
+      windowSeconds: 45,
+    });
+    expect(defaults.trustProxyHops).toBe(0);
+    expect(
+      loadEnv({
+        JWT_SECRET: "test-jwt-secret",
+        TRUST_PROXY_HOPS: "2",
+      }).trustProxyHops,
+    ).toBe(2);
+  });
+
+  it("rejects an invalid request limit", () => {
+    expect(() =>
+      loadEnv({
+        JWT_SECRET: "test-jwt-secret",
+        RATE_LIMIT_MAX_REQUESTS: "0",
+      }),
+    ).toThrow("RATE_LIMIT_MAX_REQUESTS deve ser um inteiro positivo");
+  });
+
+  it("rejects a negative proxy hop count", () => {
+    expect(() =>
+      loadEnv({
+        JWT_SECRET: "test-jwt-secret",
+        TRUST_PROXY_HOPS: "-1",
+      }),
+    ).toThrow("TRUST_PROXY_HOPS deve ser um inteiro nao negativo");
+  });
 });

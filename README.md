@@ -39,6 +39,24 @@ Copy-Item .env.example .env
 O arquivo `.env` não deve ser commitado. Em ambientes reais, substitua o valor
 de `JWT_SECRET` por um segredo seguro.
 
+### Limite de requisicoes de produtos
+
+Somente `GET /products` possui limite de requisicoes: por padrao, cada IP pode
+fazer 100 requisicoes por janela fixa de 60 segundos. As variaveis abaixo
+permitem ajustar esse comportamento:
+
+| Variavel | Padrao | Descricao |
+| --- | --- | --- |
+| `RATE_LIMIT_MAX_REQUESTS` | `100` | Numero maximo de requisicoes por IP na janela. |
+| `RATE_LIMIT_WINDOW_SECONDS` | `60` | Duracao da janela fixa, em segundos. |
+| `TRUST_PROXY_HOPS` | `0` | Saltos de proxy confiaveis para determinar o IP do cliente. |
+
+`TRUST_PROXY_HOPS=0` e o padrao seguro: headers como `X-Forwarded-For` nao sao
+confiados. Configure um valor maior que zero somente quando a API estiver atras
+de uma quantidade conhecida de proxies controlados. Ao exceder o limite, a API
+retorna `429 Too Many Requests` e o header `Retry-After` com os segundos ate o
+fim da janela.
+
 ## Executando com Docker
 
 Construa as imagens e suba os serviços:
@@ -196,7 +214,28 @@ Para verificar o projeto:
 
 ```bash
 npm test -- --runInBand
+npm run test:coverage -- --runInBand
 npm run build
+```
+
+### Teste manual do limite
+
+Com a API em execucao e um access token valido, envie mais requisicoes que o
+valor de `RATE_LIMIT_MAX_REQUESTS` dentro de uma janela. A ultima resposta deve
+ser `429` e incluir `Retry-After`:
+
+```bash
+for i in $(seq 1 101); do
+  curl -i -H "Authorization: Bearer <accessToken>" http://localhost:3000/products
+done
+```
+
+Em PowerShell:
+
+```powershell
+1..101 | ForEach-Object {
+  Invoke-WebRequest http://localhost:3000/products -Headers @{ Authorization = "Bearer <accessToken>" }
+}
 ```
 
 ## Documentação da estrutura

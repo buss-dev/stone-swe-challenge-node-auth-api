@@ -7,6 +7,7 @@ Cada ADR documenta uma decisão significativa, seu contexto e suas consequência
 
 | #    | Título                                       | Status |
 | ---- | -------------------------------------------- | ------ |
+| 0005 | Limitar requisicoes da listagem de produtos  | Aceito |
 | 0001 | Registrar decisões arquiteturais via ADR     | Aceito |
 | 0002 | Usar DynamoDB como banco de dados            | Aceito |
 | 0003 | Definir estratégia de autenticação           | Aceito |
