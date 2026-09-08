@@ -26,3 +26,10 @@ Dependências do projeto, agrupadas pela etapa em que foram introduzidas. Ver `d
 | @types/jest                                      | [link](https://www.npmjs.com/package/@types/jest)         | Tipagens do Jest para TypeScript                                              |
 | @types/supertest                                 | [link](https://www.npmjs.com/package/@types/supertest)    | Tipagens do Supertest para TypeScript                                         |
 | @types/jsonwebtoken                              | [link](https://www.npmjs.com/package/@types/jsonwebtoken) | Tipagens do jsonwebtoken para TypeScript                                      |
+| @types/swagger-ui-express                        | [link](https://www.npmjs.com/package/@types/swagger-ui-express) | Tipagens do Swagger UI para TypeScript                                      |
+
+## Documentação
+
+| Dependência                                                                        | Docs                                                                                             | Por quê                                                      |
+| ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------ |
+| [swagger-ui-express](https://www.npmjs.com/package/swagger-ui-express)             | [link](https://www.npmjs.com/package/swagger-ui-express)                                          | Disponibiliza a documentação visual OpenAPI em `/docs`       |

@@ -8,3 +8,20 @@ services:
     volumes:
       - "./docker/dynamodb:/home/dynamodblocal/data"
     working_dir: /home/dynamodblocal
+
+  api:
+    build:
+      context: .
+    container_name: stone-auth-api
+    depends_on:
+      - dynamodb-local
+    env_file:
+      - .env
+    environment:
+      DYNAMODB_ENDPOINT: http://dynamodb-local:8000
+      PORT: 3000
+    command: >-
+      sh -c "until node dist/scripts/create-tables.js; do sleep 2; done;
+      exec node dist/server.js"
+    ports:
+      - "3000:3000"
